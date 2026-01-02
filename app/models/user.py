@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import enum
 from datetime import datetime
+from typing import Optional
 
 from sqlalchemy import String, Enum, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -20,7 +23,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False, index=True)
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     full_name: Mapped[str] = mapped_column(String(255), nullable=False)
-    phone_number: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    phone_number: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
     role: Mapped[UserRole] = mapped_column(Enum(UserRole), nullable=False, default=UserRole.BUYER)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
 

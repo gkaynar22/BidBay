@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import enum
 from datetime import datetime
 from decimal import Decimal
+from typing import Optional
 
 from sqlalchemy import String, Text, Enum, DateTime, ForeignKey, Numeric, Index, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -22,14 +25,14 @@ class Product(Base):
     seller_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"), nullable=False, index=True)
     title: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
-    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     starting_price: Mapped[Decimal] = mapped_column(Numeric(12, 2), nullable=False)
     min_increment: Mapped[Decimal] = mapped_column(Numeric(12, 2), nullable=False, default=Decimal("1.00"))
     auction_end_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, index=True)
     status: Mapped[ProductStatus] = mapped_column(
         Enum(ProductStatus), nullable=False, default=ProductStatus.ACTIVE, index=True
     )
-    accepted_bid_id: Mapped[int | None] = mapped_column(ForeignKey("bids.id"), nullable=True)
+    accepted_bid_id: Mapped[Optional[int]] = mapped_column(ForeignKey("bids.id"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
 
     # Relationships
