@@ -80,6 +80,12 @@ backend/
 
 ## ⚙️ Environment Setup
 
+## Clone Repository
+```bash
+git clone https://github.com/muhbabelli/BidBay.git
+```
+
+
 ### 1️⃣ Create Conda Environment
 
 ```bash
