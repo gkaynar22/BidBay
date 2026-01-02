@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -7,4 +11,4 @@ class Token(BaseModel):
 
 
 class TokenPayload(BaseModel):
-    sub: int | None = None
+    sub: Optional[int] = None

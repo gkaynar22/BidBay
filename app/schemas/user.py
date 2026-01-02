@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field
 
@@ -8,7 +11,7 @@ from app.models.user import UserRole
 class UserBase(BaseModel):
     email: EmailStr
     full_name: str = Field(..., min_length=1, max_length=255)
-    phone_number: str | None = Field(None, max_length=20)
+    phone_number: Optional[str] = Field(None, max_length=20)
 
 
 class UserCreate(UserBase):
@@ -30,5 +33,5 @@ class UserResponse(UserBase):
 
 
 class UserUpdate(BaseModel):
-    full_name: str | None = Field(None, min_length=1, max_length=255)
-    phone_number: str | None = Field(None, max_length=20)
+    full_name: Optional[str] = Field(None, min_length=1, max_length=255)
+    phone_number: Optional[str] = Field(None, max_length=20)
