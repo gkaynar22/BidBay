@@ -16,7 +16,7 @@
     .card {
       max-width: 420px;
       margin: 0 auto;
-      background: #fff;
+      background: #ffffff;
       border: 1px solid #e2d8c6;
       border-radius: 10px;
       padding: 24px;
@@ -56,6 +56,7 @@
     <input id="password" type="password" placeholder="password123" />
     <button id="loginBtn">Login</button>
     <div class="note">On success, you will be redirected to the products page.</div>
+    <div class="note"><a href="products.html">Go to products</a></div>
     <div id="error" class="error"></div>
   </div>
 
@@ -83,14 +84,17 @@
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: form.toString(),
         });
+        const data = await res.json().catch(() => ({}));
         if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
           throw new Error(data.detail || "Login failed");
         }
-        const data = await res.json();
         localStorage.setItem("bidbay_token", data.access_token);
-        window.location.href = "products.html";
+        sessionStorage.setItem("bidbay_token", data.access_token);
+        errorEl.style.color = "#1f4d63";
+        errorEl.textContent = "Login successful. Redirecting...";
+        setTimeout(() => { window.location.href = "products.html"; }, 300);
       } catch (err) {
+        errorEl.style.color = "#8a2a2a";
         errorEl.textContent = err.message;
       }
     });

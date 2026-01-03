@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import auth, addresses, analytics, bids, categories, favorites, orders, payments, products
@@ -16,6 +17,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve static HTML from the frontend directory at /frontend
+app.mount("/frontend", StaticFiles(directory="frontend", html=True), name="frontend")
 
 # Include routers
 app.include_router(auth.router)
